@@ -1,20 +1,34 @@
+# IDE
+.idea/
+.vscode/
+
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# environment
+# Env files
 .env
+.env.*
+
+# Virtualenvs
 venv/
+.venv/
+backend/venv/
+backend/.venv/
+backend/Lib/
+backend/Scripts/
+backend/pyvenv.cfg
 
-# frontend
-frontend/node_modules/
-frontend/src/imgs/
-
-# backend uploads
+# Django local data
+backend/Elfezya_Bgd/db.sqlite3
 backend/Elfezya_Bgd/media/
+backend/Elfezya_Bgd/staticfiles/
 
-# virtual environment
-backend/Elfezya_Bgd/venv/
+# Frontend
+frontend/node_modules/
+frontend/dist/
 
-# logs
+# Logs
 *.log
