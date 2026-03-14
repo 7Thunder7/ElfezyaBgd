@@ -1,0 +1,447 @@
+/* src/CSS/Signup.css */
+
+.lpSignup{
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 100px;
+  background:
+    radial-gradient(900px 420px at 15% 10%, color-mix(in srgb, var(--a1) 14%, transparent), transparent 60%),
+    radial-gradient(900px 420px at 85% 20%, color-mix(in srgb, var(--a2) 16%, transparent), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg1) 92%, black), color-mix(in srgb, var(--bg2) 92%, black));
+  color: var(--text);
+}
+
+
+.lpSignup__wrap{
+  width: min(1240px, 100%);
+}
+
+@keyframes lpFadeIn{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+.lpSignup__fade{
+  animation: lpFadeIn 520ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+.lpSignup__header{
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.lpSignup__title{
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.lpSignup__subtitle{
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.lpSignup__card{
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, var(--glass) 72%, transparent);
+  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr;
+}
+
+.lpSignup__brand{
+  padding: 40px;
+  background:
+    radial-gradient(800px 400px at 30% 10%, color-mix(in srgb, var(--a1) 18%, transparent), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg2) 92%, black), color-mix(in srgb, var(--bg1) 92%, black));
+  border-inline-end: 1px solid color-mix(in srgb, var(--stroke) 70%, transparent);
+}
+
+.lpSignup__brandHead{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+}
+
+.lpSignup__logo{
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+  font-weight: 900;
+  letter-spacing: .5px;
+  color: color-mix(in srgb, var(--a1) 70%, white);
+  background: color-mix(in srgb, var(--glass-2) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--stroke) 70%, transparent);
+}
+.lpSignup__logoImg{
+  width: 95%;
+  height: 95%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+}
+
+.lpSignup__brandTitle{
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.lpSignup__brandSub{
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.lpSignup__brandCopy{
+  margin-top: 18px;
+}
+
+.lpSignup__brandCopy h4{
+  margin: 0 0 8px;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.lpSignup__brandCopy p{
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.lpSignup__brandActions{
+  margin-top: 18px;
+}
+
+.lpSignup__ghost{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--login-input-stroke);
+  background: color-mix(in srgb, var(--glass) 55%, transparent);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.lpSignup__ghost:hover{
+  background: color-mix(in srgb, var(--glass-2) 55%, transparent);
+}
+
+.lpSignup__panel{
+  padding: 34px;
+  background: color-mix(in srgb, var(--glass-2) 64%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.lpSignup__error{
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #ff2d55 22%, transparent);
+  background: color-mix(in srgb, #ff2d55 10%, transparent);
+  color: color-mix(in srgb, #ff2d55 75%, white);
+  font-size: 13px;
+}
+
+@keyframes lpPop{
+  from{ opacity: 0; transform: translateY(8px) scale(.995); }
+  to{ opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.lpSignup__field{
+  animation: lpPop 520ms cubic-bezier(.22,.9,.3,1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.lpSignup__form{
+  display: grid;
+  gap: 14px;
+}
+
+.lpSignup__row2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.lpSignup__row3{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+.lpSignup__fieldInner{
+  display: grid;
+  gap: 6px;
+}
+
+.lpSignup__label{
+  font-size: 12px;
+  color: color-mix(in srgb, var(--text) 78%, transparent);
+}
+
+.lpSignup__input{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--login-input-stroke);
+  background: var(--login-input-bg);
+  color: var(--login-input-text);
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .18s ease;
+}
+
+.lpSignup__input::placeholder{
+  color: var(--login-input-placeholder);
+}
+
+.lpSignup__input:focus{
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--a1) 55%, var(--login-input-stroke));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--a1) 18%, transparent);
+}
+
+.lpSignup__submitRow{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.lpSignup__submit{
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 50%, transparent);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--a1) 72%, #2b6bff),
+    color-mix(in srgb, var(--a2) 72%, #6d28d9)
+  );
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .12s ease, filter .2s ease, opacity .2s ease;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.lpSignup__submit:hover{ filter: brightness(1.05); }
+.lpSignup__submit:active{ transform: scale(.98); }
+.lpSignup__submit:disabled{ opacity: .65; cursor: not-allowed; }
+
+.lpSignup__foot{
+  margin-top: 12px;
+  text-align: center;
+}
+
+.lpSignup__link{
+  background: transparent;
+  border: none;
+  color: color-mix(in srgb, var(--a1) 65%, white);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.lpSignup__link:hover{ text-decoration: underline; }
+
+/* ===== Responsive ===== */
+@media (max-width: 980px){
+  .lpSignup__card{ grid-template-columns: 1fr; }
+  .lpSignup__brand{ display: none; }
+  .lpSignup__panel{ padding: 28px; }
+  .lpSignup__wrap{ width: min(760px, 100%); }
+}
+
+@media (max-width: 640px){
+  .lpSignup{ padding: 16px; }
+  .lpSignup__row2{ grid-template-columns: 1fr; }
+  .lpSignup__row3{ grid-template-columns: 1fr; }
+  .lpSignup__title{ font-size: 24px; }
+}
+
+/* ===== Desktop upscale (زي Login) ===== */
+@media (min-width: 1024px){
+  .lpSignup__wrap{ width: min(1320px, 100%); }
+  .lpSignup__brand{ padding: 48px; }
+  .lpSignup__panel{ padding: 42px; }
+  .lpSignup__title{ font-size: 32px; }
+  .lpSignup__subtitle{ font-size: 14px; }
+  .lpSignup__brandTitle{ font-size: 26px; }
+  .lpSignup__brandSub{ font-size: 14px; }
+}
+
+/* ===== Panel header (internal title) ===== */
+.lpSignup__panelHead{
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--stroke) 55%, transparent);
+  text-align: center;
+}
+
+.lpSignup__panelTitle{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: .2px;
+  color: var(--text);
+  
+}
+
+.lpSignup__panelSub{
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (min-width: 1024px){
+  .lpSignup__panelTitle{ font-size: 26px; }
+  .lpSignup__panelSub{ font-size: 14px; }
+}
+
+/* ===== Motion Pack (Enter + Subtle Move) ===== */
+
+/* 1) Background slow drift (glow) */
+@keyframes lpBgDrift{
+  0%{ background-position: 0% 0%, 100% 0%, 0% 0%; }
+  50%{ background-position: 12% 6%, 88% 8%, 0% 0%; }
+  100%{ background-position: 0% 0%, 100% 0%, 0% 0%; }
+}
+.lpSignup{
+  /* خلي الخلفية تتحرك خفيف */
+  animation: lpBgDrift 14s ease-in-out infinite;
+}
+
+/* 2) Page + Card enter */
+@keyframes lpPageIn{
+  from{ opacity: 0; transform: translateY(16px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+@keyframes lpCardIn{
+  from{ opacity: 0; transform: translateY(18px) scale(.985); filter: blur(6px); }
+  to{ opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* لو انت مستخدم lpSignup__fade بالفعل هنعززها */
+.lpSignup__wrap.lpSignup__fade{
+  animation: lpPageIn 520ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+.lpSignup__card{
+  animation: lpCardIn 620ms cubic-bezier(.2,.9,.25,1) both;
+  animation-delay: 80ms;
+  transform-origin: center;
+}
+
+/* 3) Stagger enter for brand & panel */
+@keyframes lpSlideInR{
+  from{ opacity: 0; transform: translateX(18px); }
+  to{ opacity: 1; transform: translateX(0); }
+}
+@keyframes lpSlideInL{
+  from{ opacity: 0; transform: translateX(-18px); }
+  to{ opacity: 1; transform: translateX(0); }
+}
+
+/* brand (يمين) */
+.lpSignup__brand{
+  animation: lpSlideInR 650ms cubic-bezier(.2,.9,.25,1) both;
+  animation-delay: 160ms;
+}
+
+/* panel (شمال) */
+.lpSignup__panel{
+  animation: lpSlideInL 650ms cubic-bezier(.2,.9,.25,1) both;
+  animation-delay: 220ms;
+}
+
+/* 4) Panel header small pop */
+@keyframes lpHeadPop{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+.lpSignup__panelHead{
+  animation: lpHeadPop 520ms cubic-bezier(.22,.9,.3,1) both;
+  animation-delay: 320ms;
+}
+
+/* 5) Logo float */
+@keyframes lpFloat{
+  0%{ transform: translateY(0); }
+  50%{ transform: translateY(-6px); }
+  100%{ transform: translateY(0); }
+}
+.lpSignup__logo{
+  animation: lpFloat 4.2s ease-in-out infinite;
+}
+
+/* 6) Card hover (subtle lift) */
+.lpSignup__card{
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+@media (hover:hover){
+  .lpSignup__card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 26px 80px rgba(0,0,0,.38);
+    border-color: color-mix(in srgb, var(--stroke) 95%, transparent);
+  }
+}
+
+/* 7) Button gradient shimmer */
+@keyframes lpShimmer{
+  0%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+  100%{ background-position: 0% 50%; }
+}
+.lpSignup__submit{
+  background-size: 200% 200%;
+  animation: lpShimmer 6s ease-in-out infinite;
+}
+
+/* 8) Ghost button hover */
+.lpSignup__ghost{
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+@media (hover:hover){
+  .lpSignup__ghost:hover{
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--stroke) 88%, transparent);
+  }
+}
+
+/* 9) Inputs: hover glow (خفيف) + focus already موجود */
+.lpSignup__input{
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .18s ease;
+}
+@media (hover:hover){
+  .lpSignup__input:hover{
+    border-color: color-mix(in srgb, var(--stroke) 92%, transparent);
+    box-shadow: 0 10px 26px rgba(0,0,0,.18);
+  }
+}
+
+/* 10) Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .lpSignup,
+  .lpSignup__wrap.lpSignup__fade,
+  .lpSignup__card,
+  .lpSignup__brand,
+  .lpSignup__panel,
+  .lpSignup__panelHead,
+  .lpSignup__logo,
+  .lpSignup__submit{
+    animation: none !important;
+  }
+  .lpSignup__card,
+  .lpSignup__ghost,
+  .lpSignup__input,
+  .lpSignup__submit{
+    transition: none !important;
+  }
+}

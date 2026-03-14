@@ -1,0 +1,567 @@
+@import "tailwindcss";
+
+/* =========================
+   Theme Vars (Default: Dark)
+   ✅ متوافق مع تصميمك الحالي
+========================= */
+:root{
+  --bg1:#070a12;
+  --bg2:#0a1734;
+
+  --text:#eaf0ff;
+  --muted:rgba(234,240,255,.72);
+
+  --stroke:rgba(255,255,255,.12);
+
+  /* Glass levels (header / cards) */
+  --glass: rgba(7,10,18,.45);
+  --glass-2: rgba(7,10,18,.62);
+
+  /* Accents */
+  --a1:#21d4fd;
+  --a2:#7c5cff;
+  --a3:#b721ff;
+}
+
+/* =========================
+   Light Mode Overrides
+   ✅ مش بيكسر التصميم: نفس الاستايل لكن أفتح
+========================= */
+html[data-theme="light"]{
+  --bg: #f7f8fc;
+  --bg1: #ffffff;
+  --text: #0b1220;       /* main text */
+  --muted: #5b6476;
+
+  /* Borders / strokes */
+  --stroke: rgba(11,18,32,.14);
+
+  /* Glass surfaces (for header) */
+  --glass: rgba(255,255,255,.72);
+  --glass-2: rgba(255,255,255,.86);
+
+  /* Accent */
+  --a1: #21d4fd;         /* cyan */
+
+  /* Optional: for consistent shadows */
+  --shadow-1: 0 18px 60px rgba(0,0,0,.12);
+  --shadow-2: 0 12px 30px rgba(0,0,0,.10);
+}
+
+/* تحسين شكل العناصر حسب الثيم */
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="light"]{ color-scheme: light; }
+
+/* =========================
+   Base reset
+========================= */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  /* ✅ سيبناها على bg1 علشان لو #root شفاف في صفحة معينة ما يطلعش أبيض */
+  background: var(--bg1);
+  color: var(--text);
+}
+
+/* =========================
+   Root Background
+   ✅ نفس الخلفية الحالية بالظبط لكن بالـ vars
+========================= */
+#root{
+  min-height: 100%;
+  width: 100%;
+
+  background:
+    radial-gradient(1200px 600px at 20% 0%, color-mix(in srgb, var(--a1) 14%, transparent), transparent 60%),
+    radial-gradient(1200px 600px at 80% 10%, color-mix(in srgb, var(--a3) 10%, transparent), transparent 62%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+
+  color: var(--text);
+}
+
+/* ✅ fallback لو متصفح مش بيدعم color-mix */
+@supports not (color-mix(in srgb, red 10%, transparent)) {
+  #root{
+    background:
+      radial-gradient(1200px 600px at 20% 0%, rgba(33,212,253,.14), transparent 60%),
+      radial-gradient(1200px 600px at 80% 10%, rgba(183,33,255,.10), transparent 62%),
+      linear-gradient(180deg, var(--bg1), var(--bg2));
+  }
+}
+
+/* ✅ سلاسة الاسكرول */
+html { scroll-behavior: smooth; }
+
+/* ====== Animations ====== */
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* =========================
+   BOOKS SECTION TOKENS
+========================= */
+
+/* LIGHT */
+:root{
+  /* Text */
+  --bk-text: var(--text);
+  --bk-muted: var(--muted);
+
+  /* Surfaces */
+  --bk-surface: #ffffff;            /* أسطح الكروت */
+  --bk-panel: rgba(255,255,255,.72);/* خلفية البانل */
+
+  /* Borders + ring */
+  --bk-border: rgba(11,18,32,.14);  /* زي --stroke */
+  --bk-ring: rgba(33,212,253,.35);  /* focus ring */
+
+  /* Shadow */
+  --bk-shadow: 0 22px 70px rgba(0,0,0,.12);
+
+  /* Background blobs (RGB) */
+  --bk-cyan: 33, 212, 253;
+  --bk-purple: 183, 33, 255;
+  --bk-mint: 16, 185, 129;
+
+  /* Status colors */
+  --bk-free: 16, 185, 129;          /* green */
+  --bk-paid: 79, 70, 229;           /* indigo */
+  --bk-paid2: 192, 38, 211;         /* magenta/purple */
+}
+
+/* DARK */
+:root[data-theme="dark"]{
+  --bk-text: var(--text);
+  --bk-muted: var(--muted);
+
+  --bk-surface: #0f1117;
+  --bk-panel: rgba(15,17,23,.62);
+
+  --bk-border: rgba(238,242,255,.14);
+  --bk-ring: rgba(33,212,253,.28);
+
+  --bk-shadow: 0 30px 120px rgba(0,0,0,.55);
+
+  /* نفس RGB ينفع في الدارك */
+  --bk-cyan: 33, 212, 253;
+  --bk-purple: 183, 33, 255;
+  --bk-mint: 16, 185, 129;
+
+  --bk-free: 16, 185, 129;
+  --bk-paid: 79, 70, 229;
+  --bk-paid2: 192, 38, 211;
+}
+
+:root{ --bk-overlay-end: .62; }
+:root[data-theme="dark"]{ --bk-overlay-end: .72; }
+
+/* =========================
+   HERO TOKENS (Landing Hero)
+========================= */
+
+/* LIGHT */
+:root{
+  /* Hero background gradient */
+  --hero-bg1: #f7f8fc;
+  --hero-bg2: #eef2ff;
+
+  /* Hero text colors */
+  --hero-text: #0b1220;
+  --hero-muted: rgba(11,18,32,.72);
+
+  /* Hero glass card */
+  --hero-card: rgba(255,255,255,.72);
+  --hero-stroke: rgba(11,18,32,.14);
+  --hero-shadow: 0 18px 70px rgba(0,0,0,.12);
+
+  /* Accents */
+  --a1: #21d4fd;
+  --a2: #7c5cff;
+  --a3: #b721ff;
+
+  /* Extra accents used as hardcoded values in the file */
+  --hero-nameBlue: #38bdf8;
+  --hero-pink: #ff6bd6;
+
+  /* Grid lines (was rgba(255,255,255,.05) fixed) */
+  --hero-gridLine: rgba(11,18,32,.06);
+
+  /* Stats card surface */
+  --hero-statBg: rgba(11,18,32,.04);
+  --hero-statBorder: rgba(11,18,32,.10);
+
+  /* Orbit dashed lines */
+  --hero-orbitLine: rgba(11,18,32,.18);
+
+  /* Floating equations text */
+  --hero-eq: rgba(11,18,32,.18);
+}
+
+/* DARK */
+:root[data-theme="dark"]{
+  --hero-bg1: #070a12;
+  --hero-bg2: #0a1734;
+
+  --hero-text: #eaf0ff;
+  --hero-muted: rgba(234,240,255,.72);
+
+  --hero-card: rgba(255,255,255,.06);
+  --hero-stroke: rgba(255,255,255,.12);
+  --hero-shadow: 0 18px 70px rgba(0,0,0,.55);
+
+  --a1: #21d4fd;
+  --a2: #7c5cff;
+  --a3: #b721ff;
+
+  --hero-nameBlue: #38bdf8;
+  --hero-pink: #ff6bd6;
+
+  --hero-gridLine: rgba(255,255,255,.05);
+
+  --hero-statBg: rgba(255,255,255,.04);
+  --hero-statBorder: rgba(255,255,255,.10);
+
+  --hero-orbitLine: rgba(234,240,255,.18);
+
+  --hero-eq: rgba(234,240,255,.18);
+}
+/* =========================
+   LANDING PAGE TOKENS
+========================= */
+
+/* LIGHT */
+:root{
+  /* Reuse hero background tokens */
+  --bg1: var(--hero-bg1);
+  --bg2: var(--hero-bg2);
+
+  /* Pink used in blobs */
+  --lp-pink: var(--hero-pink);
+
+  /* Grid line color (was fixed white) */
+  --lp-gridLine: rgba(11,18,32,.06);
+
+  /* Glow colors */
+  --lp-glowCyan: rgba(33,212,253,.12);
+  --lp-glowPurple: rgba(183,33,255,.10);
+
+  /* Glass section */
+  --lp-sectionBg1: rgba(255,255,255,.72);
+  --lp-sectionBg2: rgba(255,255,255,.50);
+  --lp-sectionBorder: rgba(11,18,32,.12);
+  --lp-sectionShadow: 0 18px 60px rgba(0,0,0,.12);
+
+  /* Titles inside glass */
+  --lp-title: rgba(11,18,32,.92);
+  --lp-subtitle: rgba(11,18,32,.70);
+
+  /* Overlay surfaces that were forcing bg-white */
+  --lp-whiteSurface: rgba(255,255,255,.92);
+  --lp-shadowStrong: 0 18px 60px rgba(0,0,0,.18);
+
+  --lpFeatOrbit__divider: var(124,92,255,.55);
+  --try: rgba(123,23,31);
+
+
+}
+
+/* DARK */
+:root[data-theme="dark"]{
+  --bg1: var(--hero-bg1);
+  --bg2: var(--hero-bg2);
+
+  --lp-pink: var(--hero-pink);
+  --lp-gridLine: rgba(255,255,255,.05);
+
+  --lp-glowCyan: rgba(33,212,253,.12);
+  --lp-glowPurple: rgba(183,33,255,.10);
+
+  --lp-sectionBg1: rgba(255,255,255,.06);
+  --lp-sectionBg2: rgba(255,255,255,.03);
+  --lp-sectionBorder: rgba(255,255,255,.10);
+  --lp-sectionShadow: 0 18px 60px rgba(0,0,0,.30);
+
+  --lp-title: rgba(234,240,255,.95);
+  --lp-subtitle: rgba(234,240,255,.70);
+
+  --lp-whiteSurface: rgba(255,255,255,.92);
+  --lp-shadowStrong: 0 18px 60px rgba(0,0,0,.35);
+}
+/* =========================
+   LANDING SECTIONS TOKENS
+   (Top Students / Features / Orbit)
+========================= */
+
+/* LIGHT */
+:root{
+  /* Headings */
+  --lpH-title: rgba(11,18,32,.92);
+  --lpH-sub: rgba(11,18,32,.70);
+
+  /* Glass surfaces */
+  --lpGlass1: rgba(255,255,255,.72);
+  --lpGlass2: rgba(255,255,255,.50);
+  --lpBorder: rgba(11,18,32,.12);
+
+  /* Shadows */
+  --lpShadowMd: 0 14px 40px rgba(0,0,0,.12);
+  --lpShadowLg: 0 18px 60px rgba(0,0,0,.14);
+  --lpShadowXl: 0 26px 86px rgba(0,0,0,.16);
+
+  /* Media background (instead of #000) */
+  --lpMediaBg: #f3f4f6;
+
+  /* Orbit ring dashed line */
+  --lpOrbitRing: rgba(11,18,32,.18);
+
+  /* Soft text in orbit cards */
+  --lpCardText: rgba(11,18,32,.88);
+  --lpCardMuted: rgba(11,18,32,.68);
+
+  /* Kicker chip */
+  --lpKickerBg: rgba(11,18,32,.05);
+  --lpKickerBorder: rgba(11,18,32,.10);
+}
+
+/* DARK */
+:root[data-theme="dark"]{
+  --lpH-title: rgba(234,240,255,.96);
+  --lpH-sub: rgba(234,240,255,.72);
+
+  --lpGlass1: rgba(255,255,255,.07);
+  --lpGlass2: rgba(255,255,255,.03);
+  --lpBorder: rgba(255,255,255,.10);
+
+  --lpShadowMd: 0 14px 40px rgba(0,0,0,.22);
+  --lpShadowLg: 0 18px 60px rgba(0,0,0,.30);
+  --lpShadowXl: 0 26px 86px rgba(0,0,0,.40);
+
+  --lpMediaBg: #000;
+
+  --lpOrbitRing: rgba(234,240,255,.18);
+
+  --lpCardText: rgba(234,240,255,.95);
+  --lpCardMuted: rgba(234,240,255,.70);
+
+  --lpKickerBg: rgba(255,255,255,.06);
+  --lpKickerBorder: rgba(255,255,255,.12);
+}
+/* =========================
+   NEWS SECTION TOKENS
+========================= */
+
+/* LIGHT */
+:root{
+  /* RGB blobs */
+  --news-cyan: 33, 212, 253;
+  --news-purple: 183, 33, 255;
+  --news-mint: 16, 185, 129;
+
+  /* Text */
+  --news-title: rgba(11,18,32,.92);
+  --news-sub: rgba(11,18,32,.70);
+  --news-text: rgba(11,18,32,.88);
+  --news-muted: rgba(11,18,32,.62);
+
+  /* Panel / cards */
+  --news-border: rgba(11,18,32,.12);
+  --news-panelBg1: rgba(255,255,255,.72);
+  --news-panelBg2: rgba(255,255,255,.50);
+  --news-cardBg: rgba(255,255,255,.55);
+
+  /* Shadows */
+  --news-shadowPanel: 0 22px 70px rgba(0,0,0,.14);
+  --news-shadowCard: 0 14px 44px rgba(0,0,0,.12);
+
+  /* Controls */
+  --news-btnBg: rgba(11,18,32,.05);
+  --news-btnText: rgba(11,18,32,.92);
+
+  /* Dots */
+  --news-dot: rgba(11,18,32,.22);
+
+  /* Focus */
+  --news-ring: rgba(33,212,253,.28);
+
+  /* Media overlay end strength */
+  --news-overlayEnd: .38;
+}
+
+/* DARK */
+:root[data-theme="dark"]{
+  --news-cyan: 33, 212, 253;
+  --news-purple: 183, 33, 255;
+  --news-mint: 16, 185, 129;
+
+  --news-title: rgba(234,240,255,.97);
+  --news-sub: rgba(234,240,255,.72);
+  --news-text: rgba(234,240,255,.95);
+  --news-muted: rgba(234,240,255,.62);
+
+  --news-border: rgba(255,255,255,.10);
+  --news-panelBg1: rgba(255,255,255,.065);
+  --news-panelBg2: rgba(255,255,255,.025);
+  --news-cardBg: rgba(255,255,255,.028);
+
+  --news-shadowPanel: 0 22px 70px rgba(0,0,0,.34);
+  --news-shadowCard: 0 14px 44px rgba(0,0,0,.24);
+
+  --news-btnBg: rgba(255,255,255,.035);
+  --news-btnText: rgba(234,240,255,.95);
+
+  --news-dot: rgba(255,255,255,.22);
+  --news-ring: rgba(33,212,253,.22);
+
+  --news-overlayEnd: .45;
+}
+/* =========================
+   PACKAGES SECTION TOKENS
+========================= */
+
+/* LIGHT */
+:root{
+  --pkg-title: rgba(11,18,32,.92);
+  --pkg-sub: rgba(11,18,32,.70);
+
+  --pkg-border: rgba(11,18,32,.12);
+  --pkg-cardBg1: rgba(255,255,255,.72);
+  --pkg-cardBg2: rgba(255,255,255,.50);
+  --pkg-cardShadow: 0 14px 44px rgba(0,0,0,.12);
+  --pkg-cardShadowHover: 0 22px 70px rgba(0,0,0,.16);
+
+  --pkg-text: rgba(11,18,32,.88);
+  --pkg-muted: rgba(11,18,32,.68);
+
+  --pkg-chipBg: rgba(11,18,32,.05);
+  --pkg-chipBorder: rgba(11,18,32,.10);
+  --pkg-chipText: rgba(11,18,32,.78);
+
+  --pkg-ghostBg: rgba(11,18,32,.05);
+  --pkg-ghostBorder: rgba(11,18,32,.12);
+  --pkg-ghostText: rgba(11,18,32,.92);
+
+  --pkg-badgeBorder: rgba(33,212,253,.26);
+  --pkg-badgeBg: rgba(33,212,253,.10);
+  --pkg-badgeText: rgba(11,18,32,.92);
+
+  --pkg-popularBorder: rgba(33,212,253,.26);
+}
+
+/* DARK */
+:root[data-theme="dark"]{
+  --pkg-title: rgba(234,240,255,.96);
+  --pkg-sub: rgba(234,240,255,.72);
+
+  --pkg-border: rgba(255,255,255,.10);
+  --pkg-cardBg1: rgba(255,255,255,.06);
+  --pkg-cardBg2: rgba(255,255,255,.03);
+  --pkg-cardShadow: 0 14px 44px rgba(0,0,0,.24);
+  --pkg-cardShadowHover: 0 22px 70px rgba(0,0,0,.35);
+
+  --pkg-text: rgba(234,240,255,.95);
+  --pkg-muted: rgba(234,240,255,.68);
+
+  --pkg-chipBg: rgba(255,255,255,.04);
+  --pkg-chipBorder: rgba(255,255,255,.10);
+  --pkg-chipText: rgba(234,240,255,.88);
+
+  --pkg-ghostBg: rgba(255,255,255,.05);
+  --pkg-ghostBorder: rgba(255,255,255,.12);
+  --pkg-ghostText: rgba(234,240,255,.92);
+
+  --pkg-badgeBorder: rgba(33,212,253,.28);
+  --pkg-badgeBg: rgba(33,212,253,.10);
+  --pkg-badgeText: rgba(234,240,255,.92);
+
+  --pkg-popularBorder: rgba(33,212,253,.32);
+}
+/* =========================
+   WHATSAPP FLOATING BUTTON TOKENS
+========================= */
+
+/* LIGHT */
+:root{
+  --wa: 37, 211, 102;        /* WhatsApp green */
+  --wa2: 18, 140, 126;       /* deeper green/teal */
+  --waText: 255, 255, 255;
+
+  --waShadow: 0 22px 70px rgba(0,0,0,.18);
+  --waRing: rgba(37,211,102,.28);
+
+  --waTipBg: 255, 255, 255; /* tooltip surface */
+  --waTipText: 11, 18, 32;  /* tooltip text */
+}
+
+/* DARK */
+:root[data-theme="dark"]{
+  --wa: 37, 211, 102;
+  --wa2: 18, 140, 126;
+  --waText: 255, 255, 255;
+
+  --waShadow: 0 26px 86px rgba(0,0,0,.38);
+  --waRing: rgba(37,211,102,.22);
+
+  --waTipBg: 15, 17, 23;    /* tooltip dark surface */
+  --waTipText: 234, 240, 255;
+}
+:root{ --waBorder: rgba(11,18,32,.12); }
+:root[data-theme="dark"]{ --waBorder: rgba(255,255,255,.16); }
+
+/* ===== Ticker tokens ===== */
+:root{
+  --ticker-bg: color-mix(in srgb, var(--glass) 72%, transparent);
+  --ticker-stroke: var(--stroke);
+  --ticker-text: var(--text);
+  --ticker-muted: var(--muted);
+
+  --ticker-chip-bg: color-mix(in srgb, var(--glass-2) 70%, transparent);
+  --ticker-chip-stroke: color-mix(in srgb, var(--stroke) 70%, transparent);
+  --ticker-chip-text: var(--text);
+
+  --ticker-glow: color-mix(in srgb, var(--a1) 22%, transparent);
+}
+
+html[data-theme="light"]{
+  /* في اللايت: زوّد الكونتراست وخلي الخلفية أفتح لكن واضحة */
+  --ticker-bg: color-mix(in srgb, #ffffff 78%, transparent);
+  --ticker-stroke: color-mix(in srgb, #0b1220 16%, transparent);
+  --ticker-text: #0b1220;
+  --ticker-muted: color-mix(in srgb, #0b1220 68%, transparent);
+
+  --ticker-chip-bg: color-mix(in srgb, #ffffff 88%, transparent);
+  --ticker-chip-stroke: color-mix(in srgb, #0b1220 18%, transparent);
+  --ticker-chip-text: #0b1220;
+
+  --ticker-glow: color-mix(in srgb, var(--a2) 18%, transparent);
+}
+
+/* ===== Login tokens ===== */
+:root{
+  --login-input-bg: color-mix(in srgb, var(--glass-2) 60%, transparent);
+  --login-input-stroke: color-mix(in srgb, var(--stroke) 85%, transparent);
+  --login-input-text: var(--text);
+  --login-input-placeholder: color-mix(in srgb, var(--text) 45%, transparent);
+}
+
+html[data-theme="light"]{
+  --login-input-bg: color-mix(in srgb, #ffffff 82%, transparent);
+  --login-input-stroke: color-mix(in srgb, #0b1220 16%, transparent);
+  --login-input-text: #0b1220;
+  --login-input-placeholder: color-mix(in srgb, #0b1220 45%, transparent);
+}
+/* (اختياري) ضيف دول في index.css تحت :root */
+:root{
+  --rv-radius: 18px;
+  --rv-panel: color-mix(in srgb, var(--glass) 92%, transparent);
+  --rv-panel-strong: color-mix(in srgb, var(--glass-2) 92%, transparent);
+  --rv-shadow: 0 18px 50px rgba(0,0,0,.35);
+}

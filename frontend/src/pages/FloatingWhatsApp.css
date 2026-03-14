@@ -1,0 +1,152 @@
+/* =========================
+   Floating WhatsApp Button (Pro / Light-Dark / A11y)
+========================= */
+
+
+
+.lpWa{
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2147483647;      /* أعلى من أي layer */
+  pointer-events: auto;     /* للتأكد إنه قابل للضغط */
+  transform: translateZ(0); /* يقلل مشاكل stacking في بعض الحالات */
+
+  width: 62px;
+  height: 62px;
+
+  display: inline-grid;
+  place-items: center;
+
+  border-radius: 999px;
+  text-decoration: none;
+
+  /* fixes */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  isolation: isolate;
+}
+
+@media (min-width: 640px){
+  .lpWa{ left: 24px; bottom: 24px; width: 66px; height: 66px; }
+}
+
+/* ripple ring */
+.lpWa__ring{
+  position: absolute;
+  inset: -10px;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(var(--wa), .20), transparent 62%);
+  filter: blur(2px);
+  opacity: .9;
+  z-index: -1;
+}
+
+/* main button */
+.lpWa__btn{
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+
+  display: grid;
+  place-items: center;
+
+  color: rgb(var(--waText));
+  background: linear-gradient(145deg, rgba(var(--wa), 1), rgba(var(--wa2), 1));
+  box-shadow: var(--waShadow);
+  border: 1px solid var(--waBorder);
+
+  transform: translateZ(0);
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    filter .18s ease;
+}
+
+.lpWa__icon{
+  width: 30px;
+  height: 30px;
+}
+
+@media (min-width: 640px){
+  .lpWa__icon{ width: 32px; height: 32px; }
+}
+
+/* Hover/Active */
+.lpWa:hover .lpWa__btn{
+  transform: translateY(-3px) scale(1.03);
+  filter: saturate(1.1) contrast(1.02);
+  box-shadow: 0 30px 90px rgba(0,0,0,.34);
+}
+.lpWa:active .lpWa__btn{
+  transform: translateY(-1px) scale(.99);
+}
+
+/* Accessible focus */
+.lpWa:focus-visible{
+  outline: none;
+}
+.lpWa:focus-visible .lpWa__btn{
+  box-shadow:
+    0 0 0 4px var(--waRing),
+    var(--waShadow);
+}
+
+/* tooltip */
+.lpWa__tip{
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+
+  background: rgba(var(--waTipBg), .92);
+  color: rgb(var(--waTipText));
+  font-size: 13px;
+  font-weight: 800;
+
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 18px 50px rgba(0,0,0,.22);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.lpWa__tipArrow{
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  border-left: 0;
+  border-right-color: rgba(var(--waTipBg), .92);
+}
+
+.lpWa:hover .lpWa__tip{
+  opacity: 1;
+  transform: translateY(-50%) translateX(2px);
+}
+
+/* motion-friendly: ring pulse */
+@keyframes lpWaPulse{
+  0%{ transform: scale(.92); opacity: .55; }
+  50%{ transform: scale(1.02); opacity: .95; }
+  100%{ transform: scale(.92); opacity: .55; }
+}
+.lpWa__ring{
+  animation: lpWaPulse 2.6s ease-in-out infinite;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .lpWa__ring{ animation: none !important; }
+  .lpWa__btn{ transition: none !important; }
+  .lpWa__tip{ transition: none !important; }
+}

@@ -1,0 +1,13 @@
+
+> elfezya-bgd@0.0.0 dev
+> vite
+
+failed to load config from E:\WORK\MR_Zakaria Haron\Elfezya_Bgd\vite.config.ts
+error when starting dev server:
+Error: The service was stopped
+    at E:\WORK\MR_Zakaria Haron\Elfezya_Bgd\node_modules\vite\node_modules\esbuild\lib\main.js:949:34
+    at responseCallbacks.<computed> (E:\WORK\MR_Zakaria Haron\Elfezya_Bgd\node_modules\vite\node_modules\esbuild\lib\main.js:603:9)
+    at Socket.afterClose (E:\WORK\MR_Zakaria Haron\Elfezya_Bgd\node_modules\vite\node_modules\esbuild\lib\main.js:594:28)
+    at Socket.emit (node:events:530:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)

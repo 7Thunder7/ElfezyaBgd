@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# environment
+.env
+venv/
+
+# frontend
+frontend/node_modules/
+frontend/src/imgs/
+
+# backend uploads
+backend/Elfezya_Bgd/media/
+
+# virtual environment
+backend/Elfezya_Bgd/venv/
+
+# logs
+*.log

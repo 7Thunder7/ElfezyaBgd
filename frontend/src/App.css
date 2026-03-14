@@ -1,0 +1,75 @@
+/* App.css (UPDATED) */
+
+/* ✅ خلي الخلفية بتاعة الموقع من أول الصفحة */
+:root{
+  --bg1:#070a12;
+  --bg2:#0a1734;
+  --text:#eaf0ff;
+}
+
+/* ✅ Reset + background */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg1);
+}
+
+#root {
+  min-height: 100%;
+  /* ❗ مهم: شيلنا max-width + margin auto + padding عشان مايبقاش فيه إطار/بياض حوالين المحتوى */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  /* خلي الخلفية الأساسية بتظهر من أول الصفحة */
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(33,212,253,.14), transparent 60%),
+    radial-gradient(1200px 600px at 80% 10%, rgba(183,33,255,.10), transparent 62%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+
+  color: var(--text);
+}
+
+/* ✅ سلاسة الاسكرول */
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================
+   (اختياري) ستايلات Vite الافتراضية — سيبها لو محتاجها
+   ========================= */
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

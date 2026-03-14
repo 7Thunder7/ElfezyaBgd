@@ -1,0 +1,413 @@
+/* src/pages/Exams.css */
+
+/* =============== Base Page =============== */
+.exPage{
+  min-height: 100vh;
+  padding: 56px 16px;
+  color: var(--text);
+  position: relative;
+  overflow: clip;
+
+  background:
+    radial-gradient(900px 420px at 15% 10%, color-mix(in srgb, var(--a1) 14%, transparent), transparent 60%),
+    radial-gradient(900px 420px at 85% 20%, color-mix(in srgb, var(--a2) 16%, transparent), transparent 60%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg1) 92%, black),
+      color-mix(in srgb, var(--bg2) 92%, black)
+    );
+}
+
+@media (min-width: 640px){ .exPage{ padding: 64px 24px; } }
+@media (min-width: 1024px){ .exPage{ padding: 72px 48px; } }
+
+.exPage--screen{
+  display: grid;
+  place-items: center;
+}
+
+/* =============== Animated Background =============== */
+.exBg{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  isolation: isolate;
+}
+
+.exBlob{
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 999px;
+  filter: blur(34px);
+  opacity: .75;
+  transform: translate3d(0,0,0);
+  mix-blend-mode: screen;
+}
+
+.exBlob--a{
+  left: -120px; top: -120px;
+  background: color-mix(in srgb, var(--a1) 32%, transparent);
+  animation: exBlobA 10s ease-in-out infinite;
+}
+.exBlob--b{
+  right: -140px; top: 40px;
+  background: color-mix(in srgb, var(--a2) 34%, transparent);
+  animation: exBlobB 12s ease-in-out infinite;
+}
+.exBlob--c{
+  left: 18%; bottom: -160px;
+  background: color-mix(in srgb, var(--a3) 26%, transparent);
+  animation: exBlobC 14s ease-in-out infinite;
+}
+
+.exGrid{
+  position: absolute;
+  inset: 0;
+  opacity: .16;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.10) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(60% 50% at 50% 20%, #000 55%, transparent 100%);
+  animation: exGridDrift 16s linear infinite;
+}
+
+@keyframes exBlobA{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(60px, 40px) scale(1.08); }
+}
+@keyframes exBlobB{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(-70px, 60px) scale(1.06); }
+}
+@keyframes exBlobC{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(40px, -55px) scale(1.1); }
+}
+@keyframes exGridDrift{
+  from{ transform: translateY(0); }
+  to{ transform: translateY(38px); }
+}
+
+/* =============== Entry / Motion =============== */
+.exEnter{
+  animation: exEnter .55s cubic-bezier(.2,.9,.25,1) both;
+}
+
+@keyframes exEnter{
+  from{ opacity: 0; transform: translateY(12px) scale(.985); filter: blur(6px); }
+  to  { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .exEnter, .exBlob, .exGrid{ animation: none !important; }
+}
+
+/* =============== Layout =============== */
+.exWrap{
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.exHeader{
+  display: grid;
+  gap: 14px;
+  align-items: start;
+  grid-template-columns: 1fr;
+  margin-bottom: 16px;
+  padding-top: 10px;
+}
+@media (min-width: 860px){
+  .exHeader{
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+  }
+}
+
+.exTitle{
+  font-size: clamp(1.4rem, 2vw + 1rem, 2.1rem);
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+.exDesc{
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.exMeta{
+  margin-top: 10px;
+  font-size: .9rem;
+  color: color-mix(in srgb, var(--muted) 92%, transparent);
+}
+
+/* Timer card */
+.exTimer{
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, var(--glass-2) 92%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  padding: 12px 14px;
+  min-width: 220px;
+}
+.exTimer__label{
+  font-size: .9rem;
+  color: var(--muted);
+}
+.exTimer__time{
+  margin-top: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: .6px;
+}
+.exTimer__hint{
+  margin-top: 6px;
+  font-size: .78rem;
+  color: color-mix(in srgb, var(--muted) 90%, transparent);
+}
+
+/* =============== Questions =============== */
+.exQuestions{
+  display: grid;
+  gap: 14px;
+}
+
+.exQCard{
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, var(--glass) 90%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+  padding: 14px;
+}
+
+.exQCard__head{
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.exQCard__title{
+  font-size: 1.05rem;
+  font-weight: 850;
+  line-height: 1.5;
+}
+.exQCard__tag{
+  flex: none;
+  font-size: .82rem;
+  color: color-mix(in srgb, var(--muted) 92%, transparent);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, white 4%, transparent);
+}
+
+.exQCard__body{
+  margin-top: 12px;
+}
+
+/* =============== Choices =============== */
+.exChoices{
+  display: grid;
+  gap: 10px;
+}
+
+.exChoice{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, white 4%, transparent);
+  cursor: pointer;
+  transition: transform .2s cubic-bezier(.2,.9,.3,1), background .2s, border-color .2s, box-shadow .2s;
+}
+.exChoice:hover{
+  transform: translateY(-2px);
+  background: color-mix(in srgb, white 7%, transparent);
+  border-color: color-mix(in srgb, var(--a1) 18%, var(--stroke));
+}
+.exChoice--selected{
+  background: color-mix(in srgb, var(--a2) 14%, color-mix(in srgb, white 5%, transparent));
+  border-color: color-mix(in srgb, var(--a2) 35%, transparent);
+  box-shadow: 0 16px 40px rgba(0,0,0,.24);
+}
+.exChoice--disabled{
+  opacity: .85;
+  cursor: not-allowed;
+}
+.exChoice__input{
+  width: 16px;
+  height: 16px;
+  accent-color: var(--a1);
+  flex: none;
+}
+.exChoice__text{
+  font-size: .95rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* empty mini */
+.exEmptyMini{
+  font-size: .82rem;
+  color: color-mix(in srgb, var(--muted) 92%, transparent);
+  padding: 10px 12px;
+}
+
+/* =============== Text Answer =============== */
+.exTextWrap{
+  display: block;
+}
+
+.exTextarea{
+  width: 100%;
+  min-height: 160px;
+  resize: vertical;
+  border-radius: 14px;
+  padding: 12px 12px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, white 4%, transparent);
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s, background .2s, box-shadow .2s, transform .2s;
+}
+.exTextarea::placeholder{
+  color: color-mix(in srgb, var(--muted) 85%, transparent);
+}
+.exTextarea:focus{
+  border-color: color-mix(in srgb, var(--a1) 35%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--a1) 16%, transparent);
+  background: color-mix(in srgb, white 6%, transparent);
+}
+
+/* =============== Footer / Actions =============== */
+.exFoot{
+  margin-top: 16px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exHint{
+  font-size: .92rem;
+  color: var(--muted);
+}
+
+.exResult{
+  font-size: .95rem;
+  color: var(--text);
+}
+.exResult__score{
+  font-weight: 900;
+  color: color-mix(in srgb, #22c55e 80%, white);
+}
+.exResult__pct{
+  margin-top: 6px;
+  font-size: .82rem;
+  color: color-mix(in srgb, var(--muted) 92%, transparent);
+}
+
+.exFoot__actions{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.exBtn{
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, var(--glass) 92%, transparent);
+  color: var(--text);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .22s cubic-bezier(.2,.9,.3,1), background .22s, border-color .22s, filter .22s;
+}
+.exBtn:hover{
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--glass-2) 86%, transparent);
+  border-color: color-mix(in srgb, var(--a1) 20%, var(--stroke));
+}
+.exBtn:active{ transform: translateY(0); }
+.exBtn:disabled{
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+.exBtn--ghost{
+  background: color-mix(in srgb, white 5%, transparent);
+}
+
+.exBtn--primary{
+  border-color: color-mix(in srgb, var(--a2) 35%, transparent);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--a2) 65%, #000),
+    color-mix(in srgb, var(--a1) 55%, #000)
+  );
+}
+.exBtn--primary:hover{
+  filter: brightness(1.08);
+  border-color: color-mix(in srgb, var(--a1) 40%, transparent);
+}
+
+/* =============== Loading / Error Center =============== */
+.exCenter{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 16px;
+}
+
+.exSpinner{
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 3px solid rgba(255,255,255,.18);
+  border-top-color: color-mix(in srgb, var(--a1) 80%, white);
+  margin: 0 auto 12px;
+  animation: exSpin 1s linear infinite;
+}
+@keyframes exSpin{ to{ transform: rotate(360deg); } }
+
+.exCenter__text{
+  font-size: 1.05rem;
+  font-weight: 850;
+  color: var(--text);
+}
+
+.exErrorCard{
+  width: min(560px, 100%);
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--stroke) 85%, transparent);
+  background: color-mix(in srgb, var(--glass-2) 92%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 70px rgba(0,0,0,.55);
+  padding: 18px;
+}
+.exErrorCard__title{
+  font-weight: 900;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+.exErrorCard__text{
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.exErrorCard__actions{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
