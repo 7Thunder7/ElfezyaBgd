@@ -1,0 +1,23 @@
+Files changed or added for Render/Vercel deployment:
+- requirements.txt
+- Elfezya_Bgd/settings.py
+- Elfezya_Bgd/urls.py
+- study/urls.py
+- study/serializers.py
+- accounts/urls.py
+- landing/views.py
+- build.sh
+- start.sh
+- render.yaml
+- .python-version
+- .env.example
+- .gitignore
+- DEPLOY_RENDER_VERCEL.md
+
+Files removed from the ready-to-upload package:
+- .idea/
+- __pycache__/
+- *.pyc
+- db.sqlite3
+- staticfiles/
+- Elfezya_Bgd/.env.py
