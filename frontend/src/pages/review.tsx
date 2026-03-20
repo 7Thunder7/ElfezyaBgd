@@ -1,5 +1,5 @@
 // src/pages/review.tsx
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import  { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logoutUser as apiLogout } from "../lib/auth";
 import "../CSS/Review.css";
