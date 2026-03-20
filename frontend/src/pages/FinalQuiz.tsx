@@ -1,5 +1,5 @@
 // src/pages/Exams.tsx
-import  { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 type Choice = {
