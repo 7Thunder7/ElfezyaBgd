@@ -6,7 +6,7 @@ import { logout as clearLocalTokens } from "../lib/auth";
 import "../CSS/Header.css";
 import { useTheme } from "../theme/ThemeProvider";
 
-import logoImg from "../imgs/elmobde3 logo.png";
+import logoImg from "../imgs/elfezya bgd.png";
 
 type UserLite = {
   id?: number;
