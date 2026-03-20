@@ -1,5 +1,5 @@
 // src/pages/LandingPage.tsx
-// import React from "react";
+
 import React, { useState, useEffect } from "react";
 import Ticker from "../components/Ticker";
 import "./LandingHero.css";
@@ -11,7 +11,8 @@ import h2Img from "../imgs/h2.jpg";
 import h3Img from "../imgs/h3.jpg";
 import { Link } from "react-router-dom";
 import platformLogo from "../imgs/elfezya bgd.png";
-import FeaturesOrbit, { FeatureItem } from "../components/FeaturesOrbit";
+import FeaturesOrbit from "../components/FeaturesOrbit";
+import type { FeatureItem } from "../components/FeaturesOrbit";
 import { createPortal } from "react-dom";
 import "./LandingBooks.css";
 import "./FloatingWhatsApp.css";
@@ -352,23 +353,8 @@ const LandingPage: React.FC = () => {
     }
   };
 
-  // Get icon for package feature checkmark
-  const CheckIcon = () => (
-    <svg
-      className="shrink-0 mt-0.5 size-4 text-blue-600 dark:text-blue-500"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
+
+  
 
   // ========== Loading State ==========
   if (loading) {

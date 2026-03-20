@@ -1,5 +1,5 @@
 // src/pages/Store.tsx
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import  { useEffect, useMemo, useRef, useState } from "react";
 import api from "../lib/api";
 import { getCurrentUser } from "../lib/auth";
 import "../CSS/Store.css";
