@@ -354,7 +354,10 @@ export default function ReviewPage() {
     }
   };
 
- 
+  const handleVideoDoubleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    toggleFullscreen();
+  };
 
   /* ========== FETCH DATA ========== */
   const fetchVideos = async (signal?: AbortSignal) => {

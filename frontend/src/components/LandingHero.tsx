@@ -1,4 +1,4 @@
-
+import React from "react";
 import "./LandingHero.css";
 
 // ✅ الصورة من داخل src/imgs (نفس مكان المسار اللي عندك)
