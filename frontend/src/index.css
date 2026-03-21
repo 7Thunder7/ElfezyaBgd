@@ -268,7 +268,7 @@ html { scroll-behavior: smooth; }
   --lp-whiteSurface: rgba(255,255,255,.92);
   --lp-shadowStrong: 0 18px 60px rgba(0,0,0,.18);
 
-  --lpFeatOrbit__divider: var(124,92,255,.55);
+  --lpFeatOrbit__divider: rgba(124,92,255,.55);
   --try: rgba(123,23,31);
 
 
