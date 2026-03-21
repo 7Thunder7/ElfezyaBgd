@@ -1,24 +1,35 @@
 # accounts/views.py
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.sessions.models import Session
+from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+
 from rest_framework import generics, permissions, status
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .serializers import SignupSerializer, UserSerializer, LoginSerializer
 import logging
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
+@ensure_csrf_cookie
+def csrf(request):
+    """
+    GET /api/auth/csrf/
+    Sets CSRF cookie so the frontend can send X-CSRFToken in later requests.
+    """
+    return JsonResponse({"detail": "CSRF cookie set"})
+
+
 @method_decorator(csrf_exempt, name="dispatch")
 class SignupView(generics.CreateAPIView):
     """
-    POST /api/accounts/signup/
+    POST /api/signup/
     Creates user, logs them in (session) and returns user info.
     """
     serializer_class = SignupSerializer
@@ -29,7 +40,6 @@ class SignupView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
-        # Login user (session-based)
         try:
             login(request, user)
             logger.info(f"User {user.username} registered and logged in successfully")
@@ -44,7 +54,7 @@ class SignupView(generics.CreateAPIView):
 @method_decorator(csrf_exempt, name="dispatch")
 class LoginView(APIView):
     """
-    POST /api/accounts/login/
+    POST /api/login/
     Accepts: { "identifier": "email_or_username", "password": "xxx" }
     Returns: { "user": {...} } and sets session cookie
     """
@@ -71,7 +81,6 @@ class LoginView(APIView):
                     logger.info(f"User authenticated via email: {identifier}")
             except User.DoesNotExist:
                 logger.warning(f"No user found with email: {identifier}")
-                pass
 
         if user is None:
             # Strategy 3: Try to find user by username (case-insensitive)
@@ -82,7 +91,6 @@ class LoginView(APIView):
                     logger.info(f"User authenticated via username: {identifier}")
             except User.DoesNotExist:
                 logger.warning(f"No user found with username: {identifier}")
-                pass
 
         if user is None:
             logger.warning(f"Authentication failed for identifier: {identifier}")
@@ -91,7 +99,6 @@ class LoginView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
-        # Check if user is active
         if not user.is_active:
             logger.warning(f"Inactive user attempted login: {user.username}")
             return Response(
@@ -99,11 +106,9 @@ class LoginView(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        # Log the user in (creates session)
         login(request, user)
         logger.info(f"User {user.username} logged in successfully")
 
-        # Ensure we have a session key
         if not request.session.session_key:
             request.session.save()
         new_session_key = request.session.session_key
@@ -124,22 +129,20 @@ class LoginView(APIView):
         except Exception as e:
             logger.warning(f"Failed to save session key: {e}")
 
-        # Return user data
         out = UserSerializer(user, context={"request": request}).data
         return Response({"user": out}, status=status.HTTP_200_OK)
 
 
 class LogoutView(APIView):
     """
-    POST /api/accounts/logout/
+    POST /api/logout/
     Logs out current user and clears session
     """
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        username = request.user.username if request.user else "unknown"
+        username = request.user.username if request.user and request.user.is_authenticated else "unknown"
 
-        # Clear stored session key on user
         try:
             user = request.user
             user.current_session_key = None
@@ -147,7 +150,6 @@ class LogoutView(APIView):
         except Exception as e:
             logger.warning(f"Failed to clear session key: {e}")
 
-        # Logout (clears session)
         logout(request)
         logger.info(f"User {username} logged out successfully")
 
@@ -156,7 +158,7 @@ class LogoutView(APIView):
 
 class MeView(APIView):
     """
-    GET /api/accounts/me/
+    GET /api/me/
     Returns current authenticated user or null
     """
     permission_classes = [permissions.AllowAny]
@@ -174,7 +176,7 @@ class MeView(APIView):
 @method_decorator(csrf_exempt, name="dispatch")
 class GoogleAuthView(APIView):
     """
-    POST /api/accounts/auth/google/
+    POST /api/auth/google/
     Accepts JSON: { "id_token": "<google-id-token>", "create_session": true/false }
     Verifies id_token with Google, finds/creates user,
     returns {"user":..., "tokens": {access, refresh}} (if SimpleJWT available)
@@ -183,14 +185,14 @@ class GoogleAuthView(APIView):
     authentication_classes = []
 
     def post(self, request):
-        id_token = (
-                request.data.get("id_token")
-                or request.data.get("token")
-                or request.data.get("credential")
+        id_token_value = (
+            request.data.get("id_token")
+            or request.data.get("token")
+            or request.data.get("credential")
         )
-        create_session = bool(request.data.get("create_session", True))  # Default to True
+        create_session = bool(request.data.get("create_session", True))
 
-        if not id_token:
+        if not id_token_value:
             return Response(
                 {"detail": "id_token مطلوب"},
                 status=status.HTTP_400_BAD_REQUEST
@@ -206,11 +208,11 @@ class GoogleAuthView(APIView):
             audience = getattr(settings, "GOOGLE_CLIENT_ID", None)
             try:
                 payload = google_id_token.verify_oauth2_token(
-                    id_token, google_requests.Request(), audience
+                    id_token_value, google_requests.Request(), audience
                 )
             except Exception:
                 payload = google_id_token.verify_oauth2_token(
-                    id_token, google_requests.Request()
+                    id_token_value, google_requests.Request()
                 )
         except Exception as e:
             logger.debug(f"google-auth verification failed: {e}")
@@ -221,7 +223,7 @@ class GoogleAuthView(APIView):
                 import requests
                 r = requests.get(
                     "https://oauth2.googleapis.com/tokeninfo",
-                    params={"id_token": id_token},
+                    params={"id_token": id_token_value},
                     timeout=6
                 )
                 if r.status_code == 200:
@@ -244,17 +246,13 @@ class GoogleAuthView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        email_verified = payload.get("email_verified") in (True, "true", "True", "1")
         first_name = payload.get("given_name") or ""
         last_name = payload.get("family_name") or ""
 
-        # Find or create user
         try:
             user = User.objects.filter(email__iexact=email).first()
-            created = False
 
             if not user:
-                # Generate unique username
                 base_username = email.split("@")[0]
                 username = base_username
                 counter = 1
@@ -270,7 +268,6 @@ class GoogleAuthView(APIView):
                 )
                 user.set_unusable_password()
                 user.save()
-                created = True
                 logger.info(f"Created new user via Google: {username}")
 
         except Exception as e:
@@ -280,7 +277,6 @@ class GoogleAuthView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-        # Create session if requested
         if create_session:
             try:
                 login(request, user)
@@ -297,7 +293,6 @@ class GoogleAuthView(APIView):
             except Exception as e:
                 logger.warning(f"login() failed: {e}")
 
-        # Try to provide JWT tokens if available
         tokens = None
         try:
             from rest_framework_simplejwt.tokens import RefreshToken
@@ -309,7 +304,6 @@ class GoogleAuthView(APIView):
         except Exception as e:
             logger.debug(f"SimpleJWT not available: {e}")
 
-        # Prepare response
         data = {"user": UserSerializer(user, context={"request": request}).data}
         if tokens:
             data["tokens"] = tokens
